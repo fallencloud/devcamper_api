@@ -9,14 +9,13 @@ const BootcampSchema = new mongoose.Schema(
       required: [true, 'Please add a name'],
       unique: true,
       trim: true,
-      maxlength: [50, 'Name cannot be more than 50 characters']
+      maxlength: [50, 'Name can not be more than 50 characters']
     },
     slug: String,
     description: {
       type: String,
       required: [true, 'Please add a description'],
-      trim: true,
-      maxlength: [500, 'Description cannot be more than 500 characters']
+      maxlength: [500, 'Description can not be more than 500 characters']
     },
     website: {
       type: String,
@@ -103,7 +102,7 @@ const BootcampSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
-      required: false
+      required: true
     }
   },
   {
@@ -112,7 +111,7 @@ const BootcampSchema = new mongoose.Schema(
   }
 );
 
-//Create bootcamp slug from the name
+// Create bootcamp slug from the name
 BootcampSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
   next();

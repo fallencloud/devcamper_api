@@ -79,6 +79,8 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
   const { zipcode, distance } = req.params;
 
+  console.info(`${zipcode} ${distance}`);
+
   // Get lat/lng from geocoder
   const loc = await geocoder.geocode(zipcode);
   const lat = loc[0].latitude;
@@ -92,6 +94,8 @@ exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
   const bootcamps = await Bootcamp.find({
     location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }
   });
+
+  console.info(bootcamps);
 
   res.status(200).json({
     success: true,
